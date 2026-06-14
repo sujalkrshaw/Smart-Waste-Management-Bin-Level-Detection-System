@@ -1,0 +1,596 @@
+[
+    {
+        "id": "471f334ee51517e2",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dc8b3caa8c3fe297",
+        "type": "mqtt in",
+        "z": "471f334ee51517e2",
+        "name": "",
+        "topic": "smartwaste/bin1/data",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9173674e0f8d925f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 340,
+        "y": 1000,
+        "wires": [
+            [
+                "23b1e8a66829e65f"
+            ]
+        ]
+    },
+    {
+        "id": "23b1e8a66829e65f",
+        "type": "json",
+        "z": "471f334ee51517e2",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 690,
+        "y": 1000,
+        "wires": [
+            [
+                "39b196f6bfdb1fec",
+                "956ae19f7d17f6e7",
+                "07984a03d047fa6a",
+                "a6aa8e453e1b40f2",
+                "f068ed6f278929e9",
+                "dc0983318342f356",
+                "6c6c16765a7c52b6",
+                "9654b8f6ed854855",
+                "b7abf1c4556fe462",
+                "819a764a78bf8f86"
+            ]
+        ]
+    },
+    {
+        "id": "39b196f6bfdb1fec",
+        "type": "debug",
+        "z": "471f334ee51517e2",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "07984a03d047fa6a",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "function 4",
+        "func": "msg.payload = msg.payload.fill;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1160,
+        "y": 1180,
+        "wires": [
+            [
+                "bc3bc350d9545074"
+            ]
+        ]
+    },
+    {
+        "id": "dc0983318342f356",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "distance function",
+        "func": "msg.payload = msg.payload.distance.toFixed(2) + \" cm\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 880,
+        "wires": [
+            [
+                "4ac0df5b272d763e"
+            ]
+        ]
+    },
+    {
+        "id": "f068ed6f278929e9",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "function 6",
+        "func": "if(msg.payload.alert === \"YES\"){\n\n   msg.payload =\n   \"⚠️ Bin Full! Immediate Collection Required\";\n\n   return msg;\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1260,
+        "wires": [
+            [
+                "107251baf19ac9e5"
+            ]
+        ]
+    },
+    {
+        "id": "a6aa8e453e1b40f2",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "Extract Fill",
+        "func": "msg.payload = msg.payload.fill;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 980,
+        "wires": [
+            [
+                "ed4ecba2ec595608"
+            ]
+        ]
+    },
+    {
+        "id": "956ae19f7d17f6e7",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "Bin States",
+        "func": "msg.payload = msg.payload.status;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 1080,
+        "wires": [
+            [
+                "6e870469fed76df7"
+            ]
+        ]
+    },
+    {
+        "id": "ed4ecba2ec595608",
+        "type": "ui_gauge",
+        "z": "471f334ee51517e2",
+        "name": "",
+        "group": "3cdcb48c005727a8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Fill Percentage",
+        "label": "units",
+        "format": "{{value}} %",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#9ed69e",
+            "#c3c360",
+            "#e59999"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1760,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "6e870469fed76df7",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "Bin Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1630,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "bc3bc350d9545074",
+        "type": "ui_chart",
+        "z": "471f334ee51517e2",
+        "name": "",
+        "group": "3cdcb48c005727a8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Fill Level Trend",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1540,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "107251baf19ac9e5",
+        "type": "ui_toast",
+        "z": "471f334ee51517e2",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1370,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "4ac0df5b272d763e",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Distance",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1680,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "4f916c3ea19784ab",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Alert Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1550,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "6c6c16765a7c52b6",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "Alert Status",
+        "func": "msg.payload = msg.payload.alert;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 800,
+        "wires": [
+            [
+                "4f916c3ea19784ab"
+            ]
+        ]
+    },
+    {
+        "id": "9654b8f6ed854855",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "collection recomendation",
+        "func": "let fill = msg.payload.fill;\n\nif(fill < 40){\n    msg.payload = \"🟢 No Collection Required\";\n}\nelse if(fill < 80){\n    msg.payload = \"🟡 Schedule Collection Soon\";\n}\nelse{\n    msg.payload = \"🔴 Immediate Collection Required\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 720,
+        "wires": [
+            [
+                "ea7501a2deb2f3a9"
+            ]
+        ]
+    },
+    {
+        "id": "ea7501a2deb2f3a9",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Collection Recommendation",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1360,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "21ab5bf9b0c4173c",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Bin Health",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1170,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "731a4d52fe774ec7",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Collection Priority",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1330,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "b7abf1c4556fe462",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "Bin Health unction",
+        "func": "let fill = msg.payload.fill;\n\nif(fill < 40)\n    msg.payload = \"🟢 HEALTHY\";\n\nelse if(fill < 80)\n    msg.payload = \"🟡 ATTENTION\";\n\nelse\n    msg.payload = \"🔴 CRITICAL\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 640,
+        "wires": [
+            [
+                "21ab5bf9b0c4173c"
+            ]
+        ]
+    },
+    {
+        "id": "819a764a78bf8f86",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "function 5",
+        "func": "let fill = msg.payload.fill;\n\nif(fill >= 80)\n    msg.payload = \"HIGH\";\n\nelse if(fill >= 40)\n    msg.payload = \"MEDIUM\";\n\nelse\n    msg.payload = \"LOW\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 1340,
+        "wires": [
+            [
+                "731a4d52fe774ec7"
+            ]
+        ]
+    },
+    {
+        "id": "d097c886c41c5479",
+        "type": "function",
+        "z": "471f334ee51517e2",
+        "name": "function 7",
+        "func": "msg.payload =\nnew Date().toLocaleString();\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 1420,
+        "wires": [
+            [
+                "5493369c46bd6821"
+            ]
+        ]
+    },
+    {
+        "id": "5493369c46bd6821",
+        "type": "ui_text",
+        "z": "471f334ee51517e2",
+        "group": "3cdcb48c005727a8",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Last update",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1230,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "153ef1fcaff5d646",
+        "type": "ui_spacer",
+        "z": "471f334ee51517e2",
+        "name": "spacer",
+        "group": "4c6ea0b53be99325",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9173674e0f8d925f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3cdcb48c005727a8",
+        "type": "ui_group",
+        "name": "Bin Monitoring",
+        "tab": "da42f4c6e4888ef2",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4c6ea0b53be99325",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "3ec48ad194743fcf",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "da42f4c6e4888ef2",
+        "type": "ui_tab",
+        "name": "Smart Waste Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3ec48ad194743fcf",
+        "type": "ui_tab",
+        "name": "Smart Waste Dashboard",
+        "icon": "dashboard",
+        "order": 6,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "6059cf39920892bf",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
