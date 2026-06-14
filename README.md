@@ -171,9 +171,6 @@ Automatic notification when fill level exceeds threshold.
 
 ![Full Bin](images/dashboard_full.png)
 
-### Alert Notification
-
-![Alert](images/alert_popup.png)
 
 ---
 
